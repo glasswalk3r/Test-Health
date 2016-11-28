@@ -9,7 +9,9 @@ Test::Health - Perl API to process tests and send an e-mail report in case of fa
 
 =head1 SYNOPSIS
 
-See the perldoc of health_check.pl script for details of usage.
+This module is only Pod.
+
+See the Pod of health_check.pl script for details of usage.
 
 For information regarding extending this distribution, check the other Pods available.
 
