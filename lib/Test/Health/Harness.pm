@@ -48,7 +48,7 @@ has report_file => (
     default => 'results.html'
 );
 
-=head2 lib
+=head2 _lib
 
 Same function of the parameter C<lib> as described in L<TAP::Harness> C<new> method Pod.
 
@@ -56,7 +56,7 @@ Accepts a scalar value or array ref of scalar values indicating which paths to a
 
 =cut
 
-has _lib => ( is => 'ro', isa => Str, reader => '_get_lib', predicate => 1 );
+has _lib => ( is => 'ro', isa => Str, reader => '_get_lib', predicate => '_has_lib' );
 
 =head1 METHODS
 
@@ -71,10 +71,6 @@ Getter for the C<report_file> attribute.
 =head2 set_report_file
 
 Setter for the C<report_file> attribute.
-
-=head2 _get_lib
-
-"Hidden" getter for the C<_lib> attribute.
 
 =head2 BUILD
 
@@ -121,7 +117,7 @@ sub test_health {
         $fmt->verbosity(-2);
         my $harness;
 
-        if ( $self->has_lib ) {
+        if ( $self->_has_lib ) {
             $harness = TAP::Harness->new(
                 {
                     formatter => $fmt,
