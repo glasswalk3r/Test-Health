@@ -23,14 +23,12 @@ By using standard test modules like Test-Simple, you can implement your tests an
 to run those tests, collect results and send an e-mail in the case any test fails.
 
 This is usefull if you want to implement a simple health check on your system, but don't have a monitoring system
-like Nagios (or doesn't want to use one). Once you have the test files, it is pretty straighforward to send an e-mail
+like Nagios (or don't want to use one). Once you have the test files, it is pretty straighforward to send an e-mail
 in case of problems.
 
 Be sure to check the Pod documentation include in this distribution for more details.
 
 =head1 SEE ALSO
-
-Test-Health relies on good modules from CPAN like:
 
 =over
 
@@ -41,6 +39,12 @@ L<Test::Health::Email>
 =item *
 
 L<Test::Health::Harness>
+
+=back
+
+Test-Health also relies on good modules from CPAN like:
+
+=over
 
 =item *
 
