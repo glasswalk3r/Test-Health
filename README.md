@@ -16,7 +16,7 @@ Test-Health relies on good modules from [CPAN](http://search.cpan.org) like:
 * TAP::Formatter::HTML
 * Email::Sender::Transport::SMTP
 
-Be sure to check the Pod documentation include for more details.
+Be sure to check the Pod documentation include for more details and the project [Wiki](https://github.com/glasswalk3r/Test-Health/wiki).
 
 This software is Copyright (c) 2016 by Alceu Rodrigues de Freitas Junior.
 
