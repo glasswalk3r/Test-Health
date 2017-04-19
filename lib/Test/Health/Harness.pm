@@ -8,7 +8,7 @@ use TAP::Harness 3.30;
 use TAP::Formatter::HTML 0.11;
 use Carp;
 use File::Spec;
-use Types::Standard 1.000005 qw(Str);
+use Types::Standard 1.000005 qw(Str Object);
 
 # VERSION
 
@@ -56,9 +56,27 @@ Accepts a scalar value or array ref of scalar values indicating which paths to a
 
 =cut
 
-has _lib => ( is => 'ro', isa => Str, reader => '_get_lib', predicate => '_has_lib' );
+has _lib =>
+  ( is => 'ro', isa => Str, reader => '_get_lib', predicate => '_has_lib' );
+
+=head2 formatter
+
+Holds a reference to L<TAP::Formatter::HTML>, so you can customize it if desired by subclassing this class.
+
+=cut
+
+has formatter => (
+    is     => 'ro',
+    isa    => Object,
+    reader => 'get_formatter',
+    writer => '_set_formatter'
+);
 
 =head1 METHODS
+
+=head2 get_formatter
+
+Getter for the C<formatter> attribute.
 
 =head2 get_dir
 
@@ -87,6 +105,10 @@ sub BUILD {
     stat( $args->{dir} );
     confess "Cannot read $args->{dir}: does not exists or it is not a directory"
       unless ( ( -e _ ) and ( -d _ ) );
+    my $fmt = TAP::Formatter::HTML->new();
+    $fmt->output_file( $self->get_report_file );
+    $fmt->verbosity(-2);
+    $self->_set_formatter($fmt);
 }
 
 =head2 test_health
@@ -104,7 +126,6 @@ return C<undef>.
 =cut
 
 sub test_health {
-
     my $self = shift;
     my @tests = glob( File::Spec->catfile( $self->get_dir, '*.t' ) );
     confess 'could not locate any test file (*.t) in ' . $self->get_dir
@@ -112,10 +133,8 @@ sub test_health {
 
     foreach my $test (@tests) {
         my $output_filename = $self->get_report_file;
-        my $fmt             = TAP::Formatter::HTML->new();
-        $fmt->output_file($output_filename);
-        $fmt->verbosity(-2);
         my $harness;
+        my $fmt = $self->get_formatter;
 
         if ( $self->_has_lib ) {
             $harness = TAP::Harness->new(
